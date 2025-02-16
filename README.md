@@ -9,6 +9,7 @@ Avito Merch Project
 
 
 Что я реализовал
+
 API эндпоинты:
 
 /api/auth – Авторизация 
