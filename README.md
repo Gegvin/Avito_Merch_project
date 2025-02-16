@@ -1,34 +1,71 @@
 
 Avito Merch Project
 
-Это мой проект для стажировки. Я написал его на Go, PostgreSQL , JWT  и Docker Compose. Проект позволяет сотрудникам приобретать мерч за монетки и  переводить их друг другу. Интерфейс простой и понятный, чтобы не пришлось возиться с командной строкой.
+Это мой проект для стажировки. 
+
+Я написал его на Go, PostgreSQL , JWT  и Docker Compose. Проект позволяет сотрудникам приобретать мерч за монетки и  переводить их друг другу. 
+
 (Интерфес самый простой html код. Просто изходя из задачи, сотрудникм было неудобно бы пользоваться командной строкой, поэтому сделал + веб)
 
 
 Что я реализовал
 API эндпоинты:
-/api/auth – аутентификация 
+
+/api/auth – Авторизация 
+
+curl -X POST http://localhost:8080/api/auth \
+     -H "Content-Type: application/json" \
+     -d '{"username": "your_username", "password": "your_password"}'
+
 /api/register – регистрация нового пользователя
+
+curl -X POST http://localhost:8080/api/register \
+     -H "Content-Type: application/json" \
+     -d '{"username": "new_username", "password": "new_password"}'
+
+     В ответах вам сообщет ваши токены
+     
 /api/info – получение информации о кошельке, инвентаре и истории транзакций
+
+curl -X GET http://localhost:8080/api/info \
+     -H "Authorization: Bearer <JWT_TOKEN>"
+     
+     
 /api/sendCoin – перевод монет другому сотруднику
+
+curl -X POST http://localhost:8080/api/sendCoin \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQwMTMzMDIsInVzZXJuYW1lIjoieW91cl91c2VybmFtZSJ9.someSignature" \
+     -d '{"toUser": "recipient_username", "amount": 50}'
+     
 /api/buy/{item} – покупка мерча по уникальному названию
+
+curl -X GET http://localhost:8080/api/buy/t-shirt \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDQwMTMzMDIsInVzZXJuYW1lIjoieW91cl91c2VybmFtZSJ9.someSignature"
+     
 Веб-интерфейс:
+
 Страницы для входа, регистрации, просмотра кошелька, покупки мерча и перевода монет.
 	
  Тестирование:
+ 
  •	Я написал юнит-тесты для сервисов и репозитория, а также интеграционные тесты для проверки работы API. В итоге общее покрытие тестами получилось больше 40%.
 
 Какие проблемы пришлось решать
+
 	•	Подключение к базе данных:
+ 
 Сначала я столкнулся с проблемами подключения, так как база в Docker пробрасывалась на порт 5433, а в моём коде использовался стандартный 5432. (как я понял мой стандартный постгрес сидит на 5432 и у них конфликт) Я настроил переменную окружения DB_CONFIG так, чтобы использовать порт 5433 – теперь всё работает как надо.
+
 	•	JWT и защита эндпоинтов:
+ 
 Защищённые маршруты возвращали 401, потому что JWT не попадал туда (функция getUserDataFromToken искала его в cookie). Мне пришлось изменить интеграционные тесты,  чтобы передавать токен через cookie, теперь запросы проходят корректно.
 
 Почему-то иногда докер не запускает контейнер с самим сервером (помогает перезапуск)
 
 
-Как запустить проект
-	Через Docker Compose
+Как запустить проект через Docker Compose
+
 Убедитесь, что Docker установлен
 
 переходите в директорию проекта 
@@ -53,11 +90,6 @@ DB_CONFIG="host=localhost port=5433 user=postgres password=postgres dbname=avito
 Для нагрузочного тестирования я использовал к6 и скрипт (Скрипт на js писал не сам)
 
 
-         /\      Grafana   /‾‾/  
-    /\  /  \     |\  __   /  /   
-   /  \/    \    | |/ /  /   ‾‾\ 
-  /          \   |   (  |  (‾)  |
- / __________ \  |_|\_\  \_____/ 
 
      execution: local
         script: load_test.js
