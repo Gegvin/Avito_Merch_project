@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Merch Shop — Регистрация</title>
+</head>
+<body>
+<h1>Merch Shop</h1>
+<h2>Регистрация</h2>
+<form action="/register" method="POST">
+    <label>Имя пользователя:</label><br>
+    <input type="text" name="username" required><br><br>
+    <label>Пароль:</label><br>
+    <input type="password" name="password" required><br><br>
+    <input type="submit" value="Зарегистрироваться">
+</form>
+<p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+
+{{if .Error}}
+<p style="color:red;">Ошибка: {{.Error}}</p>
+{{end}}
+</body>
+</html>

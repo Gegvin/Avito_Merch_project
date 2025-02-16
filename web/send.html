@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Merch Shop — Перевод монет</title>
+</head>
+<body>
+<h1>Merch Shop — Перевод монет</h1>
+<form action="/send" method="POST">
+    <label>Кому (имя пользователя):</label><br>
+    <input type="text" name="toUser" required><br><br>
+    <label>Сколько монет:</label><br>
+    <input type="number" name="amount" required><br><br>
+    <input type="submit" value="Отправить">
+</form>
+
+{{if .Message}}
+<p>{{.Message}}</p>
+{{end}}
+{{if .Error}}
+<p style="color:red;">Ошибка: {{.Error}}</p>
+{{end}}
+
+<p><a href="/dashboard">Вернуться на главную</a></p>
+</body>
+</html>

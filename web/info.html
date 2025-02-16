@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Merch Shop — Информация</title>
+</head>
+<body>
+<h1>Merch Shop — Информация</h1>
+<p>Имя пользователя: {{.Username}}</p>
+<p>Баланс монет: {{.Coins}}</p>
+
+<h2>Купленные товары</h2>
+{{if .Inventory}}
+<ul>
+    {{range .Inventory}}
+    <li>{{.Type}} (количество: {{.Quantity}})</li>
+    {{end}}
+</ul>
+{{else}}
+<p>Инвентарь пуст</p>
+{{end}}
+
+<h2>История монет</h2>
+<h3>Получено:</h3>
+{{if .Received}}
+<ul>
+    {{range .Received}}
+    <li>От {{.FromUser}}: {{.Amount}} монет</li>
+    {{end}}
+</ul>
+{{else}}
+<p>Нет полученных монет</p>
+{{end}}
+
+<h3>Отправлено:</h3>
+{{if .Sent}}
+<ul>
+    {{range .Sent}}
+    <li>Пользователю {{.ToUser}}: {{.Amount}} монет</li>
+    {{end}}
+</ul>
+{{else}}
+<p>Нет отправленных монет</p>
+{{end}}
+
+<p><a href="/dashboard">Вернуться на главную</a></p>
+</body>
+</html>

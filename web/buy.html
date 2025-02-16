@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Merch Shop — Покупка мерча</title>
+</head>
+<body>
+<h1>Merch Shop — Покупка мерча</h1>
+
+
+<table border="1" cellspacing="0" cellpadding="5">
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Цена (монет)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr><td>t-shirt</td><td>80</td></tr>
+    <tr><td>cup</td><td>20</td></tr>
+    <tr><td>book</td><td>50</td></tr>
+    <tr><td>pen</td><td>10</td></tr>
+    <tr><td>powerbank</td><td>200</td></tr>
+    <tr><td>hoody</td><td>300</td></tr>
+    <tr><td>umbrella</td><td>200</td></tr>
+    <tr><td>socks</td><td>10</td></tr>
+    <tr><td>wallet</td><td>50</td></tr>
+    <tr><td>pink-hoody</td><td>500</td></tr>
+    </tbody>
+</table>
+
+<br>
+
+
+<form action="/buy" method="POST">
+    <label>Выберите товар:</label><br>
+    <select name="item" required>
+        <option value="">-- Выберите товар --</option>
+        <option value="t-shirt">t-shirt (80 монет)</option>
+        <option value="cup">cup (20 монет)</option>
+        <option value="book">book (50 монет)</option>
+        <option value="pen">pen (10 монет)</option>
+        <option value="powerbank">powerbank (200 монет)</option>
+        <option value="hoody">hoody (300 монет)</option>
+        <option value="umbrella">umbrella (200 монет)</option>
+        <option value="socks">socks (10 монет)</option>
+        <option value="wallet">wallet (50 монет)</option>
+        <option value="pink-hoody">pink-hoody (500 монет)</option>
+    </select>
+    <br><br>
+    <input type="submit" value="Купить">
+</form>
+
+{{if .Message}}
+<p>{{.Message}}</p>
+{{end}}
+{{if .Error}}
+<p style="color:red;">Ошибка: {{.Error}}</p>
+{{end}}
+
+<p><a href="/dashboard">Вернуться на главную</a></p>
+</body>
+</html>
